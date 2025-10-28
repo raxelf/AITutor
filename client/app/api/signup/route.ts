@@ -1,4 +1,5 @@
 // import { prisma } from "@/utils/prisma";
+import { Prisma } from "@/app/generated/prisma/client";
 import { hashPassword } from "@/utils/bcrypt";
 import { prisma } from "@/utils/prisma";
 import { restfulResponse } from "@/utils/response";
@@ -56,16 +57,30 @@ export const POST = async (request: NextRequest) => {
       }
     );
   } catch (err) {
+    console.log(err);
+
     // zod Validation error
     if (err instanceof z.ZodError) {
-      // console.log(err);
-
       const errMessage = err.issues[0].message;
 
       return NextResponse.json<restfulResponse<never>>(
         {
           code: 400,
           error: `${errMessage}`,
+        },
+        {
+          status: 400,
+        }
+      );
+    } else if (
+      err instanceof Prisma.PrismaClientKnownRequestError &&
+      err.code === "P2002"
+    ) {
+      // prisma validation unique email
+      return NextResponse.json<restfulResponse<never>>(
+        {
+          code: 400,
+          error: "Email already registered.",
         },
         {
           status: 400,
