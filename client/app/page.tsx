@@ -1,11 +1,9 @@
-"use client";
-
 import WelcomeAnimationComponent from "@/components/WelcomeAnimationComponent";
 import Link from "next/link";
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-12">
+    <section className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-12">
       {/* Left side */}
       <div className="w-full h-full col-span-6 flex flex-col">
         {/* LOGO */}
@@ -40,6 +38,6 @@ export default function Home() {
       <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] md:flex hidden justify-center items-center">
         <WelcomeAnimationComponent />
       </div>
-    </main>
+    </section>
   );
 }

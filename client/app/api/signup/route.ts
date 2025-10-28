@@ -1,3 +1,87 @@
-export const POST = () => {
-  
-}
+// import { prisma } from "@/utils/prisma";
+import { hashPassword } from "@/utils/bcrypt";
+import { prisma } from "@/utils/prisma";
+import { restfulResponse } from "@/utils/response";
+import { NextRequest, NextResponse } from "next/server";
+import * as z from "zod";
+
+// Zod validation
+const signUpSchema = z.object({
+  name: z
+    .string({ message: "Name is required" })
+    .min(1, { message: "Name is required" })
+    .max(100, { message: "Name must be at most 100 characters" }),
+  email: z
+    .email({
+      message: "Email is required",
+    })
+    .min(1, { message: "Email is required" }),
+  password: z
+    .string({
+      message: "Password is required",
+    })
+    .min(6, {
+      message: "Password must be at least 6 characters long.",
+    }),
+});
+
+export const POST = async (request: NextRequest) => {
+  try {
+    const data = await request.json();
+
+    const parsedData = signUpSchema.safeParse(data);
+
+    if (!parsedData.success) {
+      throw parsedData.error;
+    }
+
+    const { name, email, password } = parsedData.data;
+
+    await prisma.user.create({
+      data: {
+        name,
+        email,
+        password: hashPassword(password),
+      },
+    });
+
+    return NextResponse.json<restfulResponse<unknown>>(
+      {
+        code: 201,
+        message: "Successfully registered new account",
+      },
+      {
+        // actual status
+        status: 201,
+      }
+    );
+  } catch (err) {
+    // zod Validation error
+    if (err instanceof z.ZodError) {
+      // console.log(err);
+
+      const errMessage = err.issues[0].message;
+
+      return NextResponse.json<restfulResponse<never>>(
+        {
+          code: 400,
+          error: `${errMessage}`,
+        },
+        {
+          status: 400,
+        }
+      );
+    }
+
+    // Default error
+    return NextResponse.json<restfulResponse<never>>(
+      {
+        code: 500,
+        message: "Internal Server Error!",
+      },
+      {
+        status: 500,
+      }
+    );
+  }
+};

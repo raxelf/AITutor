@@ -1,11 +1,10 @@
-"use client";
-
 import Link from "next/link";
 import WelcomeAnimationComponent from "@/components/WelcomeAnimationComponent";
+import ClientFlashComponent from "@/components/ClientFlashComponent";
 
-export default function login() {
+export default function LoginPage() {
   return (
-    <main className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-12">
+    <section className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-12">
       {/* Left side */}
       <div className="w-full h-full col-span-6 flex flex-col">
         {/* LOGO */}
@@ -26,6 +25,8 @@ export default function login() {
 
           {/* Form */}
           <form className="flex flex-col gap-4 w-full">
+            <ClientFlashComponent />
+
             <div className="flex flex-col gap-1">
               <label htmlFor="email">Email</label>
               <input
@@ -69,6 +70,6 @@ export default function login() {
       <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] md:flex hidden justify-center items-center">
         <WelcomeAnimationComponent />
       </div>
-    </main>
+    </section>
   );
 }
