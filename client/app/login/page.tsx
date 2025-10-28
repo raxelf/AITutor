@@ -1,8 +1,7 @@
 "use client";
 
-import Lottie from "lottie-react";
-import learningAnimation from "../../public/lotties/learning-onboarding.json";
 import Link from "next/link";
+import WelcomeAnimationComponent from "@/components/WelcomeAnimationComponent";
 
 export default function login() {
   return (
@@ -15,7 +14,7 @@ export default function login() {
           <span className="text-secondary">Pi</span>
         </div>
 
-        <div className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 md:px-32 px-8 my-16 md:my-0">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 md:px-16 lg:px-32 px-8 my-16 md:my-0">
           <div className="flex flex-col text-center gap-2">
             <h1 className="font-bold text-2xl md:text-4xl text-primary">
               Login
@@ -68,11 +67,7 @@ export default function login() {
 
       {/* Right Side */}
       <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] md:flex hidden justify-center items-center">
-        <Lottie
-          animationData={learningAnimation}
-          loop={true}
-          className="w-[60%] h-full"
-        />
+        <WelcomeAnimationComponent />
       </div>
     </main>
   );

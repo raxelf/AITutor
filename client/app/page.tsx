@@ -1,7 +1,6 @@
 "use client";
 
-import Lottie from "lottie-react";
-import learningAnimation from "../public/lotties/learning-onboarding.json";
+import WelcomeAnimationComponent from "@/components/WelcomeAnimationComponent";
 import Link from "next/link";
 
 export default function Home() {
@@ -39,11 +38,7 @@ export default function Home() {
 
       {/* Right Side */}
       <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] md:flex hidden justify-center items-center">
-        <Lottie
-          animationData={learningAnimation}
-          loop={true}
-          className="w-[60%] h-full"
-        />
+        <WelcomeAnimationComponent />
       </div>
     </main>
   );
