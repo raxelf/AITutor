@@ -1,0 +1,87 @@
+"use client";
+
+import Lottie from "lottie-react";
+import learningAnimation from "../../public/lotties/learning-onboarding.json";
+import Link from "next/link";
+
+export default function signup() {
+  return (
+    <main className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-12">
+      {/* Left side */}
+      <div className="w-full h-full col-span-6 flex flex-col">
+        {/* LOGO */}
+        <div className="font-bold p-4 text-3xl">
+          <span className="text-primary">Ja</span>
+          <span className="text-secondary">Pi</span>
+        </div>
+
+        <div className="w-full h-full flex flex-col justify-center items-center gap-8 px-32">
+          <div className="flex flex-col text-center gap-2">
+            <h1 className="font-bold text-4xl text-primary">Sign Up</h1>
+            <h2 className="text-md">
+              Start learning in minutes—just one step to go!
+            </h2>
+          </div>
+
+          {/* Form */}
+          <form className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="name">Name</label>
+              <input
+                type="text"
+                placeholder="Your Name"
+                id="name"
+                name="name"
+                className="w-full px-5 py-3 border border-gray-400 rounded-lg"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="email">Email</label>
+              <input
+                type="email"
+                placeholder="Your Email"
+                id="email"
+                name="email"
+                className="w-full px-5 py-3 border border-gray-400 rounded-lg"
+              />
+            </div>
+            <div className="flex flex-col gap-1">
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                placeholder="Your password"
+                id="password"
+                name="password"
+                className="w-full px-5 py-3 border border-gray-400 rounded-lg"
+              />
+            </div>
+
+            <div className="mt-4 flex flex-col gap-2">
+              <button
+                type="submit"
+                className="w-full px-5 py-3 bg-primary rounded-lg text-white cursor-pointer hover:bg-primary/75 transition delay-75 shadow-lg"
+              >
+                Sign Up
+              </button>
+              <p className="text-center">
+                Already have an account?{" "}
+                <Link href={"/login"} className="text-primary hover:underline">
+                  Login
+                </Link>
+              </p>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {/* Right Side */}
+      <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-secondary/75 flex justify-center items-center">
+        <Lottie
+          animationData={learningAnimation}
+          loop={true}
+          className="w-[60%] h-full"
+        />
+      </div>
+    </main>
+  );
+}
