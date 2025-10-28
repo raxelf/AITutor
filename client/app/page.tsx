@@ -38,7 +38,7 @@ export default function Home() {
       </div>
 
       {/* Right Side */}
-      <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-secondary/75 flex justify-center items-center">
+      <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] flex justify-center items-center">
         <Lottie
           animationData={learningAnimation}
           loop={true}

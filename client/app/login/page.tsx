@@ -4,7 +4,7 @@ import Lottie from "lottie-react";
 import learningAnimation from "../../public/lotties/learning-onboarding.json";
 import Link from "next/link";
 
-export default function signup() {
+export default function login() {
   return (
     <main className="bg-white min-h-screen grid grid-cols-1 md:grid-cols-12">
       {/* Left side */}
@@ -17,7 +17,7 @@ export default function signup() {
 
         <div className="w-full h-full flex flex-col justify-center items-center gap-8 px-32">
           <div className="flex flex-col text-center gap-2">
-            <h1 className="font-bold text-4xl text-primary">Sign Up</h1>
+            <h1 className="font-bold text-4xl text-primary">Login</h1>
             <h2 className="text-md">
               Start learning in minutes—just one step to go!
             </h2>
@@ -25,16 +25,6 @@ export default function signup() {
 
           {/* Form */}
           <form className="flex flex-col gap-4 w-full">
-            <div className="flex flex-col gap-1">
-              <label htmlFor="name">Name</label>
-              <input
-                type="text"
-                placeholder="Your Name"
-                id="name"
-                name="name"
-                className="w-full px-5 py-3 border border-gray-400 rounded-lg"
-              />
-            </div>
             <div className="flex flex-col gap-1">
               <label htmlFor="email">Email</label>
               <input
@@ -61,12 +51,12 @@ export default function signup() {
                 type="submit"
                 className="w-full px-5 py-3 bg-primary rounded-lg text-white cursor-pointer hover:bg-primary/75 transition delay-75 shadow-lg"
               >
-                Sign Up
+                Login
               </button>
               <p className="text-center">
-                Already have an account?{" "}
-                <Link href={"/login"} className="text-primary hover:underline">
-                  Login
+                Don’t have an account?{" "}
+                <Link href={"/signup"} className="text-primary hover:underline">
+                  Sign Up
                 </Link>
               </p>
             </div>
