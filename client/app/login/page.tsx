@@ -1,6 +1,13 @@
 import Link from "next/link";
 import WelcomeAnimationComponent from "@/components/WelcomeAnimationComponent";
 import ClientFlashComponent from "@/components/ClientFlashComponent";
+import { Metadata } from "next";
+import ClientSubmitButton from "@/components/ClientSubmitButton";
+import { doLogin } from "./action";
+
+export const metadata: Metadata = {
+  title: "Login",
+};
 
 export default function LoginPage() {
   return (
@@ -13,6 +20,7 @@ export default function LoginPage() {
           <span className="text-secondary">Pi</span>
         </div>
 
+        {/* header */}
         <div className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 md:px-16 lg:px-32 px-8 my-16 md:my-0">
           <div className="flex flex-col text-center gap-2">
             <h1 className="font-bold text-2xl md:text-4xl text-primary">
@@ -24,7 +32,7 @@ export default function LoginPage() {
           </div>
 
           {/* Form */}
-          <form className="flex flex-col gap-4 w-full">
+          <form action={doLogin} className="flex flex-col gap-4 w-full">
             <ClientFlashComponent />
 
             <div className="flex flex-col gap-1">
@@ -49,12 +57,8 @@ export default function LoginPage() {
             </div>
 
             <div className="mt-4 flex flex-col gap-2">
-              <button
-                type="submit"
-                className="w-full px-5 py-3 bg-primary rounded-lg text-white cursor-pointer hover:bg-primary/75 transition delay-75 shadow-lg"
-              >
-                Login
-              </button>
+              <ClientSubmitButton label="login" />
+
               <p className="text-center">
                 Don’t have an account?{" "}
                 <Link href={"/signup"} className="text-primary hover:underline">

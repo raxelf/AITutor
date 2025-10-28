@@ -49,7 +49,7 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json<restfulResponse<unknown>>(
       {
         code: 201,
-        message: "Successfully registered new account",
+        message: "Successfully registered new account!",
       },
       {
         // actual status
@@ -72,7 +72,10 @@ export const POST = async (request: NextRequest) => {
           status: 400,
         }
       );
-    } else if (
+    }
+
+    // prisma validation authentication
+    if (
       err instanceof Prisma.PrismaClientKnownRequestError &&
       err.code === "P2002"
     ) {

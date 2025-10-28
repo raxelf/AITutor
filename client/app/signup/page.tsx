@@ -2,6 +2,12 @@ import Link from "next/link";
 import WelcomeAnimationComponent from "@/components/WelcomeAnimationComponent";
 import ClientFlashComponent from "@/components/ClientFlashComponent";
 import { doSignUp } from "./action";
+import { Metadata } from "next";
+import ClientSubmitButton from "@/components/ClientSubmitButton";
+
+export const metadata: Metadata = {
+  title: "SignUp",
+};
 
 export default function SignUpPage() {
   return (
@@ -14,6 +20,7 @@ export default function SignUpPage() {
           <span className="text-secondary">Pi</span>
         </div>
 
+        {/* header */}
         <div className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 md:px-16 lg:px-32 px-8 my-16 md:my-0">
           <div className="flex flex-col text-center gap-2">
             <h1 className="font-bold text-2xl md:text-4xl text-primary">
@@ -60,12 +67,7 @@ export default function SignUpPage() {
             </div>
 
             <div className="mt-4 flex flex-col gap-2">
-              <button
-                type="submit"
-                className="w-full px-5 py-3 bg-primary rounded-lg text-white cursor-pointer hover:bg-primary/75 transition delay-75 shadow-lg"
-              >
-                Sign Up
-              </button>
+              <ClientSubmitButton label="signup" />
               <p className="text-center">
                 Already have an account?{" "}
                 <Link href={"/login"} className="text-primary hover:underline">

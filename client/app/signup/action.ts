@@ -5,7 +5,7 @@ import { restfulResponse } from "@/utils/response";
 import { redirect } from "next/navigation";
 
 export const doSignUp = async (formData: FormData) => {
-  console.log(formData);
+  // console.log(formData);
 
   const response = await fetch(`${BASE_URL}/api/signup`, {
     method: "POST",
@@ -19,15 +19,17 @@ export const doSignUp = async (formData: FormData) => {
     },
   });
 
-  console.log(response);
+  // console.log(response);
 
   const responseJson: restfulResponse<never> = await response.json();
 
   if (!response.ok) {
+    // error msg
     const message = responseJson.error ?? "Something went wrong!";
 
     return redirect(`/signup?error=${message}`);
   }
 
-  return redirect("/login");
+  const successMessage = responseJson.message;
+  return redirect(`/login?s=${successMessage}`);
 };

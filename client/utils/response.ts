@@ -4,3 +4,10 @@ export type restfulResponse<T> = {
   data?: T;
   error?: string;
 };
+
+export type loginResponse = {
+  code: number;
+  message?: string;
+  access_token?: string;
+  error?: string;
+};

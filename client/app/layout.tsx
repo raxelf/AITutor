@@ -10,7 +10,10 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "JadiPintar",
+  title: {
+    template: "JadiPintar - %s",
+    default: "JadiPintar - AI-Powered English Learning",
+  },
   description: "AI-Powered English Learning",
 };
 
