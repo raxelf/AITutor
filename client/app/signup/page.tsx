@@ -15,9 +15,11 @@ export default function signup() {
           <span className="text-secondary">Pi</span>
         </div>
 
-        <div className="w-full h-full flex flex-col justify-center items-center gap-8 px-32">
+        <div className="w-full h-full flex flex-col justify-center items-center gap-4 md:gap-8 md:px-32 px-8 my-16 md:my-0">
           <div className="flex flex-col text-center gap-2">
-            <h1 className="font-bold text-4xl text-primary">Sign Up</h1>
+            <h1 className="font-bold text-2xl md:text-4xl text-primary">
+              Sign Up
+            </h1>
             <h2 className="text-md">
               Start learning in minutes—just one step to go!
             </h2>
@@ -75,7 +77,7 @@ export default function signup() {
       </div>
 
       {/* Right Side */}
-      <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] flex justify-center items-center">
+      <div className="w-full h-full col-span-6 bg-linear-to-br from-primary to-[#0ea5e9] md:flex hidden justify-center items-center">
         <Lottie
           animationData={learningAnimation}
           loop={true}
