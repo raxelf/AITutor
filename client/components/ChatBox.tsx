@@ -14,18 +14,20 @@ const ChatBox = () => {
   return (
     <div className="flex flex-col h-[450px] max-h-[500px]">
       {/* Chat bubbles */}
-      {messages.map((msg, idx) => (
-        <div
-          key={idx}
-          className={
-            msg.role === "user"
-              ? "bg-primary text-white text-right rounded-2xl px-4 py-2 mb-2 max-w-[70%] self-end"
-              : "bg-gray-200/50 text-left rounded-b-2xl rounded-tr-2xl px-4 py-2 mb-2 max-w-[70%] self-start"
-          }
-        >
-          {msg.content}
-        </div>
-      ))}
+      <div className="flex-1 overflow-auto">
+        {messages.map((msg, idx) => (
+          <div
+            key={idx}
+            className={
+              msg.role === "user"
+                ? "bg-primary text-white text-right rounded-2xl px-4 py-2 mb-2 max-w-[70%] self-end"
+                : "bg-gray-200/50 text-left rounded-b-2xl rounded-tr-2xl px-4 py-2 mb-2 max-w-[70%] self-start"
+            }
+          >
+            {msg.content}
+          </div>
+        ))}
+      </div>
 
       {/* Chat input */}
       <div className="flex gap-2 mt-4">
