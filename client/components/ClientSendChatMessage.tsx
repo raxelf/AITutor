@@ -5,20 +5,23 @@ import { Dispatch, useState } from "react";
 
 const ClientSendChatMessage = ({
   dispatch,
+  setIsAITyping,
 }: {
   dispatch: Dispatch<ChatAction>;
+  setIsAITyping: (value: boolean) => void;
 }) => {
   const [inputMessage, setInputMessage] = useState("");
 
-  const handleSendMessage = (
+  const handleSendMessage = async (
     e:
       | React.MouseEvent<HTMLButtonElement>
       | React.KeyboardEvent<HTMLInputElement>
   ) => {
     e.preventDefault();
 
+    // Empty text validation
     if (!inputMessage.trim()) return;
-
+    // user message
     dispatch({
       type: "ADD_MESSAGE",
       payload: {
@@ -27,8 +30,11 @@ const ClientSendChatMessage = ({
         date: new Date().toISOString(),
       },
     });
-
     setInputMessage("");
+
+    // Ai reply
+    setIsAITyping(true);
+    
   };
 
   return (

@@ -1,9 +1,12 @@
 "use client";
 
 import { ChatContext } from "@/contexts/ChatContext";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ClientSendChatMessage from "./ClientSendChatMessage";
 import dayjs from "dayjs";
+
+import { dotPulse } from "ldrs";
+dotPulse.register();
 
 // styling of chat bubble
 const aiChatBubble =
@@ -12,6 +15,8 @@ const userChatBubble =
   "bg-primary text-white wrap-break-word whitespace-pre-line rounded-b-2xl rounded-tl-2xl px-4 py-2 mb-2 max-w-[70%]";
 
 const ClientChatBox = () => {
+  const [isAITyping, setIsAITyping] = useState(false);
+
   const context = useContext(ChatContext);
   // handle if chat history is undefined
   if (!context)
@@ -50,10 +55,21 @@ const ClientChatBox = () => {
             </div>
           </div>
         ))}
+
+        {isAITyping && (
+          <div className="flex justify-start w-full mb-2">
+            <div className={aiChatBubble}>
+              <l-dot-pulse size={48} speed={1.3} color="gray" />
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Chat input */}
-      <ClientSendChatMessage dispatch={dispatch} />
+      <ClientSendChatMessage
+        dispatch={dispatch}
+        setIsAITyping={setIsAITyping}
+      />
     </div>
   );
 };

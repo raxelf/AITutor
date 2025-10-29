@@ -32,4 +32,6 @@ export const GET = async (request: NextRequest) => {
   }
 };
 
-export const POST = (request: NextRequest) => {};
+export const POST = (request: NextRequest) => {
+  
+};
