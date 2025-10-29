@@ -4,9 +4,8 @@ import { ChatContext } from "@/contexts/ChatContext";
 import { useContext, useState } from "react";
 import ClientSendChatMessage from "./ClientSendChatMessage";
 import dayjs from "dayjs";
-
-import { dotPulse } from "ldrs";
-dotPulse.register();
+import { ThreeDot } from "react-loading-indicators";
+import Markdown from "react-markdown";
 
 // styling of chat bubble
 const aiChatBubble =
@@ -45,7 +44,7 @@ const ClientChatBox = () => {
             <div
               className={msg.role === "user" ? userChatBubble : aiChatBubble}
             >
-              {msg.content}
+              <Markdown>{msg.content}</Markdown>
 
               {msg.date && (
                 <div className="text-xs text-gray-400 mt-2 text-right">
@@ -59,7 +58,7 @@ const ClientChatBox = () => {
         {isAITyping && (
           <div className="flex justify-start w-full mb-2">
             <div className={aiChatBubble}>
-              <l-dot-pulse size={48} speed={1.3} color="gray" />
+              <ThreeDot variant="pulsate" color="gray" size="small" />
             </div>
           </div>
         )}
@@ -68,6 +67,7 @@ const ClientChatBox = () => {
       {/* Chat input */}
       <ClientSendChatMessage
         dispatch={dispatch}
+        isAITyping={isAITyping}
         setIsAITyping={setIsAITyping}
       />
     </div>

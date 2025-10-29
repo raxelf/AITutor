@@ -70,7 +70,7 @@ export const POST = async (request: NextRequest) => {
     });
   } catch (err) {
     console.error(err);
-    
+
     if (err instanceof z.ZodError) {
       const errMessage = err.issues[0].message;
 

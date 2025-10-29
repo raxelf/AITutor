@@ -1,13 +1,18 @@
 "use client";
 
+import { doSendMessage } from "@/app/onboarding/action";
 import { ChatAction } from "@/contexts/ChatContext";
+import { BASE_URL } from "@/utils/constant";
+import { restfulResponse } from "@/utils/response";
 import { Dispatch, useState } from "react";
 
 const ClientSendChatMessage = ({
   dispatch,
+  isAITyping,
   setIsAITyping,
 }: {
   dispatch: Dispatch<ChatAction>;
+  isAITyping: boolean;
   setIsAITyping: (value: boolean) => void;
 }) => {
   const [inputMessage, setInputMessage] = useState("");
@@ -33,8 +38,33 @@ const ClientSendChatMessage = ({
     setInputMessage("");
 
     // Ai reply
-    setIsAITyping(true);
-    
+    try {
+      setIsAITyping(true);
+
+      const aiReply = await doSendMessage(inputMessage);
+
+      dispatch({
+        type: "ADD_MESSAGE",
+        payload: {
+          role: "ai",
+          content: aiReply!,
+          date: new Date().toISOString(),
+        },
+      });
+    } catch (err) {
+      console.error(err);
+
+      dispatch({
+        type: "ADD_MESSAGE",
+        payload: {
+          role: "ai",
+          content: "There was an error contacting the AI service.",
+          date: new Date().toISOString(),
+        },
+      });
+    } finally {
+      setIsAITyping(false);
+    }
   };
 
   return (
@@ -44,6 +74,7 @@ const ClientSendChatMessage = ({
         className="flex-1 border rounded-xl px-4 py-2 focus:outline-none"
         placeholder="Type your message..."
         value={inputMessage}
+        disabled={isAITyping}
         onChange={(e) => setInputMessage(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") handleSendMessage(e);
@@ -52,6 +83,7 @@ const ClientSendChatMessage = ({
 
       <button
         onClick={handleSendMessage}
+        disabled={isAITyping}
         className="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary/75 cursor-pointer shrink-0"
       >
         Send
