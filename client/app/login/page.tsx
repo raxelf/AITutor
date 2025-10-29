@@ -4,6 +4,7 @@ import ClientFlashComponent from "@/components/ClientFlashComponent";
 import { Metadata } from "next";
 import ClientSubmitButton from "@/components/ClientSubmitButton";
 import { doLogin } from "./action";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Login",
@@ -33,7 +34,9 @@ export default function LoginPage() {
 
           {/* Form */}
           <form action={doLogin} className="flex flex-col gap-4 w-full">
-            <ClientFlashComponent />
+            <Suspense fallback={<></>}>
+              <ClientFlashComponent />
+            </Suspense>
 
             <div className="flex flex-col gap-1">
               <label htmlFor="email">Email</label>
