@@ -8,7 +8,7 @@ const ChatBox = () => {
   // handle if context is undefined
   if (!context) throw new Error("Invalid chat history");
 
-  const { messages, addMessage } = context;
+  const { messages, dispatch } = context;
   // console.log(messages);
 
   return (
@@ -36,7 +36,7 @@ const ChatBox = () => {
           className="flex-1 border rounded-xl px-4 py-2 focus:outline-none"
           placeholder="Type your message..."
         />
-        <button className="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary/75 cursor-pointer">
+        <button className="bg-primary text-white px-4 py-2 rounded-xl hover:bg-primary/75 cursor-pointer shrink-0">
           Send
         </button>
       </div>

@@ -1,12 +1,21 @@
 "use client";
 
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useReducer, useState } from "react";
 
 // data type
-export type MessageType = { role: string; content: string };
+export type MessageType = { role: "user" | "ai"; content: string };
+type ChatAction =
+  | { type: "ADD_MESSAGE"; payload: MessageType }
+  | { type: "RESET" };
 type ChatContextType = {
   messages: MessageType[];
-  addMessage: (role: string, content: string) => void;
+  dispatch: React.Dispatch<ChatAction>;
+};
+
+const chatReducer = (state: MessageType[], action: ChatAction) => {
+  if (action.type === "ADD_MESSAGE") return [...state, action.payload];
+  else if (action.type === "RESET") return [];
+  else return state;
 };
 
 export const ChatContext = createContext<ChatContextType | undefined>(
@@ -20,14 +29,10 @@ export const ChatProvider = ({
   children: ReactNode;
   initialMessages?: MessageType[];
 }) => {
-  const [messages, setMessages] = useState<MessageType[]>(initialMessages);
-
-  const addMessage = (role: string, content: string) => {
-    setMessages((prev) => [...prev, { role, content }]);
-  };
+  const [messages, dispatch] = useReducer(chatReducer, initialMessages);
 
   return (
-    <ChatContext.Provider value={{ messages, addMessage }}>
+    <ChatContext.Provider value={{ messages, dispatch }}>
       {children}
     </ChatContext.Provider>
   );
