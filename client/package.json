@@ -15,12 +15,13 @@
     "dayjs": "^1.11.18",
     "dotenv": "^17.2.3",
     "jsonwebtoken": "^9.0.2",
-    "ldrs": "^1.1.9",
     "lottie-react": "^2.4.1",
     "next": "16.0.0",
     "openai": "^6.7.0",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-loading-indicators": "^1.0.1",
+    "react-markdown": "^10.1.0",
     "zod": "^4.1.12"
   },
   "devDependencies": {

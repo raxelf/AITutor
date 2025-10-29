@@ -3,7 +3,11 @@
 import { createContext, ReactNode, useReducer } from "react";
 
 // data type
-export type MessageType = { role: "user" | "ai"; content: string; date: string };
+export type MessageType = {
+  role: "user" | "ai" | "system";
+  content: string;
+  date?: string;
+};
 export type ChatAction =
   | { type: "ADD_MESSAGE"; payload: MessageType }
   | { type: "RESET" };

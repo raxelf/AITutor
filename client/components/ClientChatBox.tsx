@@ -1,12 +1,11 @@
 "use client";
 
 import { ChatContext } from "@/contexts/ChatContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ClientSendChatMessage from "./ClientSendChatMessage";
 import dayjs from "dayjs";
-
-import { dotPulse } from "ldrs";
-dotPulse.register();
+import { ThreeDot } from "react-loading-indicators";
+import Markdown from "react-markdown";
 
 // styling of chat bubble
 const aiChatBubble =
@@ -16,8 +15,18 @@ const userChatBubble =
 
 const ClientChatBox = () => {
   const [isAITyping, setIsAITyping] = useState(false);
-
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const context = useContext(ChatContext);
+
+  const messages = context?.messages;
+  // console.log(messages);
+  const dispatch = context?.dispatch;
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    console.log("spam");
+  }, [messages, isAITyping]);
+
   // handle if chat history is undefined
   if (!context)
     return (
@@ -28,14 +37,11 @@ const ClientChatBox = () => {
       </div>
     );
 
-  const { messages, dispatch } = context;
-  // console.log(messages);
-
   return (
     <div className="flex flex-col h-[450px] max-h-[500px]">
       {/* Chat bubbles */}
       <div className="flex-1 overflow-auto w-full">
-        {messages.map((msg, idx) => (
+        {messages!.map((msg, idx) => (
           <div
             key={idx}
             className={`${
@@ -45,7 +51,7 @@ const ClientChatBox = () => {
             <div
               className={msg.role === "user" ? userChatBubble : aiChatBubble}
             >
-              {msg.content}
+              <Markdown>{msg.content}</Markdown>
 
               {msg.date && (
                 <div className="text-xs text-gray-400 mt-2 text-right">
@@ -59,15 +65,18 @@ const ClientChatBox = () => {
         {isAITyping && (
           <div className="flex justify-start w-full mb-2">
             <div className={aiChatBubble}>
-              <l-dot-pulse size={48} speed={1.3} color="gray" />
+              <ThreeDot variant="pulsate" color="gray" size="small" />
             </div>
           </div>
         )}
+
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Chat input */}
       <ClientSendChatMessage
-        dispatch={dispatch}
+        dispatch={dispatch!}
+        isAITyping={isAITyping}
         setIsAITyping={setIsAITyping}
       />
     </div>
