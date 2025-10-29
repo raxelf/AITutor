@@ -41,9 +41,12 @@ const ClientChatBox = () => {
               className={msg.role === "user" ? userChatBubble : aiChatBubble}
             >
               {msg.content}
-              <div className="text-xs text-gray-400 mt-2 text-right">
-                {msg.date ? dayjs(msg.date).format("HH:mm") : ""}
-              </div>
+
+              {msg.date && (
+                <div className="text-xs text-gray-400 mt-2 text-right">
+                  {dayjs(msg.date).format("HH:mm")}
+                </div>
+              )}
             </div>
           </div>
         ))}

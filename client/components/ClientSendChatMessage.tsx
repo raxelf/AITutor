@@ -21,7 +21,11 @@ const ClientSendChatMessage = ({
 
     dispatch({
       type: "ADD_MESSAGE",
-      payload: { role: "user", content: inputMessage },
+      payload: {
+        role: "user",
+        content: inputMessage,
+        date: new Date().toISOString(),
+      },
     });
 
     setInputMessage("");
