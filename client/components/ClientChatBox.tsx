@@ -1,7 +1,7 @@
 "use client";
 
 import { ChatContext } from "@/contexts/ChatContext";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import ClientSendChatMessage from "./ClientSendChatMessage";
 import dayjs from "dayjs";
 import { ThreeDot } from "react-loading-indicators";
@@ -15,8 +15,18 @@ const userChatBubble =
 
 const ClientChatBox = () => {
   const [isAITyping, setIsAITyping] = useState(false);
-
+  const messagesEndRef = useRef<HTMLDivElement>(null);
   const context = useContext(ChatContext);
+
+  const messages = context?.messages;
+  // console.log(messages);
+  const dispatch = context?.dispatch;
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    console.log("spam");
+  }, [messages, isAITyping]);
+
   // handle if chat history is undefined
   if (!context)
     return (
@@ -27,14 +37,11 @@ const ClientChatBox = () => {
       </div>
     );
 
-  const { messages, dispatch } = context;
-  // console.log(messages);
-
   return (
     <div className="flex flex-col h-[450px] max-h-[500px]">
       {/* Chat bubbles */}
       <div className="flex-1 overflow-auto w-full">
-        {messages.map((msg, idx) => (
+        {messages!.map((msg, idx) => (
           <div
             key={idx}
             className={`${
@@ -62,11 +69,13 @@ const ClientChatBox = () => {
             </div>
           </div>
         )}
+
+        <div ref={messagesEndRef} />
       </div>
 
       {/* Chat input */}
       <ClientSendChatMessage
-        dispatch={dispatch}
+        dispatch={dispatch!}
         isAITyping={isAITyping}
         setIsAITyping={setIsAITyping}
       />
