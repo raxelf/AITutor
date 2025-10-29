@@ -14,13 +14,9 @@ const loginSchema = z.object({
       message: "Email is required",
     })
     .min(1, { message: "Email is required" }),
-  password: z
-    .string({
-      message: "Password is required",
-    })
-    .min(6, {
-      message: "Password must be at least 6 characters long.",
-    }),
+  password: z.string({
+    message: "Password is required",
+  }),
 });
 
 export const POST = async (request: NextRequest) => {

@@ -1,5 +1,10 @@
 import ChatBox from "@/components/ChatBox";
 import LogoutButton from "@/components/LogoutButton";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Onboarding",
+};
 
 const OnboardingPage = () => {
   return (
