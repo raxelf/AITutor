@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const POST = async (request: NextRequest) => {
   try {
-    console.log("lesson started");
+    // console.log("lesson started");
 
     const userId = request.headers.get("x-user-id");
     const userGoal = request.headers.get("x-user-goal");
@@ -39,7 +39,7 @@ export const POST = async (request: NextRequest) => {
     ];
 
     // limit chat history to latest 8 chat
-    const limitHistory = chatHistory.slice(-12);
+    const limitHistory = chatHistory.slice(-8);
     const fullMessagesWithPrompt: MessageType[] = [
       systemPrompt,
       ...limitHistory,

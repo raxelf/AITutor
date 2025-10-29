@@ -2,8 +2,6 @@
 
 import { doSendMessage } from "@/app/onboarding/action";
 import { ChatAction } from "@/contexts/ChatContext";
-import { BASE_URL } from "@/utils/constant";
-import { restfulResponse } from "@/utils/response";
 import { Dispatch, useState } from "react";
 
 const ClientSendChatMessage = ({
