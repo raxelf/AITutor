@@ -42,6 +42,7 @@ export default function SignUpPage() {
                 placeholder="Your Name"
                 id="name"
                 name="name"
+                required
                 className="w-full px-5 py-3 border border-gray-400 rounded-lg"
               />
             </div>
@@ -52,6 +53,7 @@ export default function SignUpPage() {
                 placeholder="Your Email"
                 id="email"
                 name="email"
+                required
                 className="w-full px-5 py-3 border border-gray-400 rounded-lg"
               />
             </div>
@@ -62,6 +64,7 @@ export default function SignUpPage() {
                 placeholder="Your password"
                 id="password"
                 name="password"
+                required
                 className="w-full px-5 py-3 border border-gray-400 rounded-lg"
               />
             </div>

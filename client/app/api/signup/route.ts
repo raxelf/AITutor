@@ -38,11 +38,26 @@ export const POST = async (request: NextRequest) => {
 
     const { name, email, password } = parsedData.data;
 
-    await prisma.user.create({
+    const newUser = await prisma.user.create({
       data: {
         name,
         email,
         password: hashPassword(password),
+      },
+    });
+
+    // default first message by ai
+    const initialMessage = [
+      {
+        role: "ai",
+        content: `Hi ${newUser.name}! Welcome to JaPi. What's your English learning goal?`,
+      },
+    ];
+
+    await prisma.conversation.create({
+      data: {
+        messages: initialMessage,
+        userId: newUser.id,
       },
     });
 
