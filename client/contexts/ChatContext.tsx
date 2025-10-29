@@ -4,7 +4,7 @@ import { createContext, ReactNode, useReducer } from "react";
 
 // data type
 export type MessageType = { role: "user" | "ai"; content: string };
-type ChatAction =
+export type ChatAction =
   | { type: "ADD_MESSAGE"; payload: MessageType }
   | { type: "RESET" };
 type ChatContextType = {
