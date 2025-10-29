@@ -1,4 +1,4 @@
-import ChatBox from "@/components/ChatBox";
+import ClientChatBox from "@/components/ClientChatBox";
 import LogoutButton from "@/components/LogoutButton";
 import { Metadata } from "next";
 
@@ -24,7 +24,7 @@ const OnboardingPage = () => {
 
         {/* body */}
         <div className="p-6 bg-white rounded-b-2xl">
-          <ChatBox />
+          <ClientChatBox />
         </div>
       </div>
     </main>

@@ -3,6 +3,7 @@
 import { ChatContext } from "@/contexts/ChatContext";
 import { useContext } from "react";
 import ClientSendChatMessage from "./ClientSendChatMessage";
+import dayjs from "dayjs";
 
 // styling of chat bubble
 const aiChatBubble =
@@ -10,7 +11,7 @@ const aiChatBubble =
 const userChatBubble =
   "bg-primary text-white wrap-break-word whitespace-pre-line rounded-b-2xl rounded-tl-2xl px-4 py-2 mb-2 max-w-[70%]";
 
-const ChatBox = () => {
+const ClientChatBox = () => {
   const context = useContext(ChatContext);
   // handle if chat history is undefined
   if (!context)
@@ -40,6 +41,9 @@ const ChatBox = () => {
               className={msg.role === "user" ? userChatBubble : aiChatBubble}
             >
               {msg.content}
+              <div className="text-xs text-gray-400 mt-2 text-right">
+                {msg.date ? dayjs(msg.date).format("HH:mm") : ""}
+              </div>
             </div>
           </div>
         ))}
@@ -51,4 +55,4 @@ const ChatBox = () => {
   );
 };
 
-export default ChatBox;
+export default ClientChatBox;

@@ -51,6 +51,7 @@ export const POST = async (request: NextRequest) => {
       {
         role: "ai",
         content: `Hi ${newUser.name}! Welcome to JaPi. What's your English learning goal?`,
+        date: new Date().toISOString(),
       },
     ];
 
