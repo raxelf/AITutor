@@ -1,10 +1,31 @@
 "use client";
 
+import { ChatContext } from "@/contexts/ChatContext";
+import { useContext } from "react";
+
 const ChatBox = () => {
+  const context = useContext(ChatContext);
+  // handle if context is undefined
+  if (!context) throw new Error("Invalid chat history");
+
+  const { messages, addMessage } = context;
+  // console.log(messages);
+
   return (
     <div className="flex flex-col h-[450px] max-h-[500px]">
       {/* Chat bubbles */}
-      
+      {messages.map((msg, idx) => (
+        <div
+          key={idx}
+          className={
+            msg.role === "user"
+              ? "bg-primary text-white text-right rounded-2xl px-4 py-2 mb-2 max-w-[70%] self-end"
+              : "bg-gray-200/50 text-left rounded-b-2xl rounded-tr-2xl px-4 py-2 mb-2 max-w-[70%] self-start"
+          }
+        >
+          {msg.content}
+        </div>
+      ))}
 
       {/* Chat input */}
       <div className="flex gap-2 mt-4">
