@@ -51,6 +51,7 @@ export const POST = async (request: NextRequest) => {
       {
         role: "ai",
         content: `Hi ${newUser.name}! Welcome to JaPi. What's your English learning goal?`,
+        date: new Date().toISOString(),
       },
     ];
 
@@ -72,7 +73,7 @@ export const POST = async (request: NextRequest) => {
       }
     );
   } catch (err) {
-    console.log(err);
+    console.error(err);
 
     // zod Validation error
     if (err instanceof z.ZodError) {
@@ -110,7 +111,7 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json<restfulResponse<never>>(
       {
         code: 500,
-        message: "Internal Server Error!",
+        error: "Internal Server Error!",
       },
       {
         status: 500,

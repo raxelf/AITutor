@@ -69,6 +69,8 @@ export const POST = async (request: NextRequest) => {
       access_token: token,
     });
   } catch (err) {
+    console.error(err);
+    
     if (err instanceof z.ZodError) {
       const errMessage = err.issues[0].message;
 
@@ -103,7 +105,7 @@ export const POST = async (request: NextRequest) => {
     return NextResponse.json<restfulResponse<never>>(
       {
         code: 500,
-        message: "Internal Server Error!",
+        error: "Internal Server Error!",
       },
       {
         status: 500,
