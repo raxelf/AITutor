@@ -6,7 +6,12 @@ import { useContext } from "react";
 const ChatBox = () => {
   const context = useContext(ChatContext);
   // handle if context is undefined
-  if (!context) throw new Error("Invalid chat history");
+  if (!context)
+    return (
+      <div className="text-center text-red-600">
+        Chat unavailable. Please refresh or contact support.
+      </div>
+    );
 
   const { messages, dispatch } = context;
   // console.log(messages);

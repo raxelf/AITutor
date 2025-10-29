@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useReducer, useState } from "react";
+import { createContext, ReactNode, useReducer } from "react";
 
 // data type
 export type MessageType = { role: "user" | "ai"; content: string };
