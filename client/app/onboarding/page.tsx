@@ -3,7 +3,7 @@ import LogoutButton from "@/components/LogoutButton";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Onboarding",
+  title: "Chat",
 };
 
 const OnboardingPage = () => {
