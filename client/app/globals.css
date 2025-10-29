@@ -28,3 +28,13 @@ body {
   color: var(--foreground);
   font-family: Poppins, sans-serif, Arial, Helvetica;
 }
+
+@keyframes fade-in {
+  to {
+    scale: 1;
+    opacity: 1;
+  }
+}
+.animate-fade-in {
+  animation: fade-in 0.3s forwards;
+}

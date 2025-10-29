@@ -9,9 +9,9 @@ import Markdown from "react-markdown";
 
 // styling of chat bubble
 const aiChatBubble =
-  "bg-gray-200/50 text-left wrap-break-word whitespace-pre-line rounded-b-2xl rounded-tr-2xl px-4 py-2 mb-2 max-w-[70%]";
+  "shadow-sm bg-gray-200/50 text-left wrap-break-word whitespace-pre-line rounded-b-2xl rounded-tr-2xl px-4 py-2 mb-2 max-w-[70%] transition-all duration-200 scale-95 opacity-0 animate-fade-in";
 const userChatBubble =
-  "bg-primary text-white wrap-break-word whitespace-pre-line rounded-b-2xl rounded-tl-2xl px-4 py-2 mb-2 max-w-[70%]";
+  "shadow-md bg-primary text-white wrap-break-word whitespace-pre-line rounded-b-2xl rounded-tl-2xl px-4 py-2 mb-2 max-w-[70%]  transition-all duration-200 scale-95 opacity-0 animate-fade-in";
 
 const ClientChatBox = () => {
   const [isAITyping, setIsAITyping] = useState(false);
@@ -54,7 +54,11 @@ const ClientChatBox = () => {
               <Markdown>{msg.content}</Markdown>
 
               {msg.date && (
-                <div className="text-xs text-gray-400 mt-2 text-right">
+                <div
+                  className={`${
+                    msg.role === "user" ? "text-white" : "text-gray-400"
+                  } text-xs mt-2 text-right font-light tracking-wide opacity-80`}
+                >
                   {dayjs(msg.date).format("HH:mm")}
                 </div>
               )}
