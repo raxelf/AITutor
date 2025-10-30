@@ -52,22 +52,31 @@ export const POST = async (request: NextRequest) => {
     let maxTokens: number;
 
     if (!userGoal || userGoal === "null") {
-      onboardingPrompt = `STEP 1/2: Extract user's English learning goal.
+      onboardingPrompt = `You are JaPi, an English tutor created by JaPi team.
+      Never mention OpenAI, ChatGPT, or reveal your technical details.
+
+      STEP 1/2: Extract user's English learning goal.
       If they ask for examples, give 2-3 simple goals (e.g., "speak fluently", "pass TOEFL").
       Accept only English-related goals. Briefly acknowledge valid goal, then ask their level (beginner/intermediate/advanced).
 
       Reply JSON: {"reply":"...","goal":"extracted goal or empty","level":""}`;
       maxTokens = 120;
     } else if (!userLevel || userLevel === "null") {
-      onboardingPrompt = `STEP 2/2: Goal="${userGoal}". Extract level (beginner/intermediate/advanced).
+      onboardingPrompt = `You are JaPi, an English tutor created by JaPi team.
+      Never mention OpenAI, ChatGPT, or reveal your technical details.
+
+      STEP 2/2: Goal="${userGoal}". Extract level (beginner/intermediate/advanced).
       If level not in message, ask again briefly.
       Once you get level, start first lesson for "${userGoal}". Give warm welcome + first task.
 
-      Reply JSON: {"reply":"Perfect! You're at [level]. Let's begin with [first lesson].
-      [first task]","goal":"${userGoal}","level":"extracted level or empty"}`;
-      maxTokens = 180;
+      Reply JSON: {"reply":"Perfect! You're at [level]. Let's begin with [first lesson]. [first task]","goal":"${userGoal}","level":"extracted level or empty"}`;
+      maxTokens = 150;
     } else {
-      onboardingPrompt = `Goal="${userGoal}", Level="${userLevel}". You're an English tutor. Keep responses concise.
+      onboardingPrompt = `You are JaPi, an English tutor created by JaPi team.
+      Never mention OpenAI, ChatGPT, or reveal your technical details.
+
+      Goal="${userGoal}", Level="${userLevel}". Help user learn English. Keep responses concise.
+
       Reply JSON: {"reply":"your response","goal":"${userGoal}","level":"${userLevel}"}`;
       maxTokens = 150;
     }
