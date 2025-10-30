@@ -70,11 +70,6 @@ export const POST = async (request: NextRequest) => {
       ? (conversation.messages as MessageType[])
       : [];
 
-    const fullMessages: MessageType[] = [
-      ...chatHistory,
-      { role: "user", content: message, date: new Date().toISOString() },
-    ];
-
     // limit chat history beginner need less context
     const historyLimit = userLevel === "beginner" ? 4 : 6;
     const limitHistory = chatHistory.slice(-historyLimit);
