@@ -40,13 +40,29 @@ export const POST = async (request: NextRequest) => {
       { role: "user", content: message, date: new Date().toISOString() },
     ];
 
-    // limit chat history to latest 8 chat
-    const limitHistory = chatHistory.slice(-8);
+    // limit chat history beginner need less context
+    const historyLimit = userLevel === "beginner" ? 6 : 8;
+    const limitHistory = chatHistory.slice(-historyLimit);
+
+    const cleanMessage = message.trim().replace(/\s+/g, " ");
+
     const fullMessagesWithPrompt: MessageType[] = [
       systemPrompt,
       ...limitHistory,
       { role: "user", content: message, date: new Date().toISOString() },
     ];
+
+    const isShortMessage = cleanMessage.length < 50;
+    const isQuestion = cleanMessage.includes("?");
+
+    let maxTokens: number;
+    if (isShortMessage && !isQuestion) {
+      maxTokens = 150; // Simple corrections
+    } else if (isQuestion || cleanMessage.length > 100) {
+      maxTokens = 256; // Explanations, teaching moments
+    } else {
+      maxTokens = 200; // Standard responses
+    }
 
     const completion = await openai.chat.completions.create({
       model: "gpt-4o-mini",
@@ -54,7 +70,7 @@ export const POST = async (request: NextRequest) => {
         role: role === "ai" ? "assistant" : role,
         content,
       })),
-      max_tokens: 256,
+      max_tokens: maxTokens,
       temperature: 0.7,
     });
 
