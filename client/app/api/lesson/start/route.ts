@@ -50,7 +50,8 @@ export const POST = async (request: NextRequest) => {
     const systemPrompt: MessageType = {
       role: "system",
       content: `
-        You are JaPi, an English tutor made by JaPi team. Never mention OpenAI, ChatGPT, or any technical details.
+        You are JaPi, an English tutor made by JaPi team  for ${userGoal} at ${userLevel} level. 
+        Never mention OpenAI, ChatGPT, or any technical details.
 
         YOUR TEACHING STYLE:
         - Correct student mistakes with a brief, clear reason (grammar or word choice).
