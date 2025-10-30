@@ -50,10 +50,14 @@ export const POST = async (request: NextRequest) => {
 
     let onboardingPrompt = "";
     if (!userGoal || userGoal === "null") {
-      onboardingPrompt = `STEP 1/2: Extract user's English learning goal from their message.
-      Acknowledge briefly, then ask their level.
-      Reply JSON: {"reply":"Nice! [acknowledge goal].
-      What's your English level? (beginner/intermediate/advanced)","goal":"extracted goal","level":""}`;
+      onboardingPrompt = `STEP 1/2: Extract the user's English learning goal from their message.
+      If they ask for examples or what a goal means,
+      give 2-3 simple English learning goals (like “speak fluently”, “pass TOEFL”, "write emails").
+      Only accept real English-related goals (speaking, listening, writing, grammar, exams).
+      Briefly acknowledge a valid goal, then ask for their English level (beginner/intermediate/advanced).
+
+      Reply JSON: {"reply":"...","goal":"extracted goal or empty","level":""}
+      `;
     } else if (!userLevel || userLevel === "null") {
       onboardingPrompt = `STEP 2/2: Goal set: "${userGoal}". Extract their level from message (beginner/intermediate/advanced).
       If level not in message, ask again briefly.
