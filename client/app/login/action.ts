@@ -33,7 +33,7 @@ export const doLogin = async (formData: FormData) => {
   const cookieStorage = await cookies();
   cookieStorage.set("token", token, {
     httpOnly: true,
-    secure: false,
+    secure: true,
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24), // 24 hour
     sameSite: "strict",
   });
