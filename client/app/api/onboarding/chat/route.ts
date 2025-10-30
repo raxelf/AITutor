@@ -49,27 +49,27 @@ export const POST = async (request: NextRequest) => {
     const { message } = await request.json();
 
     let onboardingPrompt = "";
-    if (!userGoal || userGoal === "null") {
-      onboardingPrompt = `STEP 1/2: Extract the user's English learning goal from their message.
-      If they ask for examples or what a goal means,
-      give 2-3 simple English learning goals (like “speak fluently”, “pass TOEFL”, "write emails").
-      Only accept real English-related goals (speaking, listening, writing, grammar, exams).
-      Briefly acknowledge a valid goal, then ask for their English level (beginner/intermediate/advanced).
+    let maxTokens: number;
 
-      Reply JSON: {"reply":"...","goal":"extracted goal or empty","level":""}
-      `;
+    if (!userGoal || userGoal === "null") {
+      onboardingPrompt = `STEP 1/2: Extract user's English learning goal.
+      If they ask for examples, give 2-3 simple goals (e.g., "speak fluently", "pass TOEFL").
+      Accept only English-related goals. Briefly acknowledge valid goal, then ask their level (beginner/intermediate/advanced).
+
+      Reply JSON: {"reply":"...","goal":"extracted goal or empty","level":""}`;
+      maxTokens = 120;
     } else if (!userLevel || userLevel === "null") {
-      onboardingPrompt = `STEP 2/2: Goal set: "${userGoal}". Extract their level from message (beginner/intermediate/advanced).
+      onboardingPrompt = `STEP 2/2: Goal="${userGoal}". Extract level (beginner/intermediate/advanced).
       If level not in message, ask again briefly.
-      Once you get the level, immediately start the first lesson/activity related to their goal "${userGoal}".
-      Give them a warm welcome and present the first learning task or topic.
-      Reply JSON: {"reply":"Perfect! You're at [level] level.
-      Let's begin with [specific first lesson/exercise for their goal].
-      [Give first task or question]","goal":"${userGoal}","level":"extracted level or empty"}`;
+      Once you get level, start first lesson for "${userGoal}". Give warm welcome + first task.
+
+      Reply JSON: {"reply":"Perfect! You're at [level]. Let's begin with [first lesson].
+      [first task]","goal":"${userGoal}","level":"extracted level or empty"}`;
+      maxTokens = 180;
     } else {
-      onboardingPrompt = `Profile: Goal="${userGoal}", Level="${userLevel}".
-      You're an English tutor. Help with learning. Keep responses concise.
+      onboardingPrompt = `Goal="${userGoal}", Level="${userLevel}". You're an English tutor. Keep responses concise.
       Reply JSON: {"reply":"your response","goal":"${userGoal}","level":"${userLevel}"}`;
+      maxTokens = 150;
     }
 
     // prompt for limiting  topic
@@ -94,7 +94,7 @@ export const POST = async (request: NextRequest) => {
     ];
 
     // limit chat history to latest 8 chat
-    const limitHistory = chatHistory.slice(-8);
+    const limitHistory = chatHistory.slice(-2);
     const fullMessagesWithPrompt: MessageType[] = [
       systemPrompt,
       ...limitHistory,
@@ -107,9 +107,9 @@ export const POST = async (request: NextRequest) => {
         role: role === "ai" ? "assistant" : role,
         content,
       })),
-      max_tokens: 150,
-      temperature: 0.5,
       response_format: { type: "json_object" },
+      max_tokens: maxTokens,
+      temperature: 0.7,
     });
 
     const response = completion.choices?.[0]?.message?.content ?? "{}";
